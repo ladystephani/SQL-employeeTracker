@@ -18,7 +18,7 @@ and `source db/schema.sql`
 
 ## Technologies used
 
-JavaScript, ES6, Node.js, Inquirer, MySQL
+JavaScript, ES6, Node.js, Inquirer package, MySQL2 package, console.table package
 
 ## License
 
