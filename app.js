@@ -56,6 +56,56 @@ const userPrompt = () => {
     });
 };
 
+/* VIEW */
+const viewAllDpts = () => {
+  const sql = `SELECT * FROM department`;
+
+  db.query(sql, (err, res) => {
+    if (err) throw err;
+
+    console.table(res);
+    userPrompt();
+  });
+};
+
+const viewAllRoles = () => {
+  const sql = `SELECT roleType.id, roleType.title, roleType.salary, department.name
+     FROM roleType
+     LEFT JOIN department
+     ON roleType.department_id = department.id
+     `;
+
+  db.query(sql, (err, res) => {
+    if (err) throw err;
+
+    console.table(res);
+    userPrompt();
+  });
+};
+
+const viewAllEmployees = () => {
+  const sql = `SELECT employee.id, employee.first_name, employee.last_name, 
+    roleType.title, roleType.salary, 
+    department.name, 
+    CONCAT(e.first_name, ' ' ,e.last_name) AS Manager
+    FROM employee
+    
+    INNER JOIN roleType
+    ON employee.role_id = roleType.id
+    INNER JOIN department 
+    ON department.id = roleType.department_id
+    LEFT JOIN employee e 
+    ON employee.manager_id = e.id
+    `;
+
+  db.query(sql, (err, res) => {
+    if (err) throw err;
+
+    console.table(res);
+    userPrompt();
+  });
+};
+
 /** Add */
 const addDpt = () => {
   inquirer
